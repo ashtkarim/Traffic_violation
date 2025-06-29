@@ -20,7 +20,7 @@ def is_red_light(roi):
 
 # Load models
 model_crosswalk = YOLO("crosswalk.pt")  # for danger line detection (first frame)
-model_yolo = YOLO("yolov8n.pt")         # for cars + traffic lights detection
+model_yolo = YOLO("yolo12n.pt")        # for cars + traffic lights detection
 
 video_path = "video.mp4"
 cap = cv2.VideoCapture(video_path)
@@ -50,7 +50,7 @@ while cap.isOpened():
         cv2.line(frame, (0, danger_line_y), (frame.shape[1], danger_line_y), (0, 0, 255), 2)
         cv2.putText(frame, 'Danger Line', (10, danger_line_y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
 
-    results = model_yolo(frame, conf=0.3)
+    results = model_yolo(frame, conf=0.1)
     boxes = results[0].boxes
     class_names = model_yolo.names
 
